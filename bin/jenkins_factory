@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+require 'trollop'
+require 'jenkins_factory'
+require 'yaml'
+
+opts = Trollop::options do
+  opt :jenkins_settings_yml_path, 'Show the YAML here', type: :string, required: true
+end
+
+jenkins_settings = YAML.load_file(opts[:jenkins_settings_yml_path])
+
+jenkins_settings.keys.each do |k|
+  jenkins_settings[k.to_sym] = jenkins_settings[k]
+  jenkins_settings.delete k
+end
+
+puts jenkins_settings
+
+JenkinsFactory.new.create(jenkins_settings)
