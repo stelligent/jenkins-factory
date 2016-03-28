@@ -18,5 +18,5 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency('trollop', '2.1.2')
   s.add_runtime_dependency('aws-sdk-utils', '0.0.5')
-  s.add_runtime_dependency('jenkins_api_client, '1.4.2')
+  s.add_runtime_dependency('jenkins_api_client', '1.4.2')
 end

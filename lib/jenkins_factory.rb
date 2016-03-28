@@ -28,7 +28,7 @@ class JenkinsFactory
       'subnet_id' => subnet_id,
       'vpc_id' => vpc_id,
       'associate_public_ip_address' => associate_public_ip_address.to_s,
-      'extra_userdata' => extra_user_data_provisioning.to_s
+      'extra_userdata' => extra_user_data_provisioning
     }
 
     stack_outputs = converge_jenkins_stack customisations: customisations

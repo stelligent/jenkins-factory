@@ -78,20 +78,25 @@ CloudFormation {
       }
     ]
 
+    start_jenkins_commands = [
+      "#!/bin/bash -xe\n",
+      "yum update -y aws-cfn-bootstrap\n",
+      "yum -y upgrade\n",
+      "service jenkins start\n"
+    ]
+
+    cfn_signal_commands = [
+      '/opt/aws/bin/cfn-signal -e $? ',
+      '                        --stack ', Ref('AWS::StackName'),
+      '                        --resource JenkinsInstance ',
+      '                        --region ',Ref('AWS::Region'),"\n"
+    ]
+
+    userdata_commands = start_jenkins_commands + extra_userdata + cfn_signal_commands
     UserData FnBase64(FnJoin(
                         '',
-                        ([
-                          "#!/bin/bash -xe\n",
-                          "yum update -y aws-cfn-bootstrap\n",
-                          "yum -y upgrade\n",
-                          "service jenkins start\n",
-
-                          '/opt/aws/bin/cfn-signal -e $? ',
-                          '                        --stack ', Ref('AWS::StackName'),
-                          '                        --resource JenkinsInstance ',
-                          '                        --region ',Ref('AWS::Region'),"\n"
-                        ]
-                      )))
+                        userdata_commands
+                      ))
 
     CreationPolicy('ResourceSignal', { 'Count' => 1,  'Timeout' => 'PT15M' })
   }
