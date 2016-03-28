@@ -48,6 +48,7 @@ class JenkinsFactory
     JobSeeder.new.seed_jobs jenkins_connection_info: jenkins_connection_info,
                             jobs_location: jobs_location
 
+    stack_outputs['JenkinsURL']
   end
 
   private

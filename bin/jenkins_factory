@@ -14,6 +14,6 @@ jenkins_settings.keys.each do |k|
   jenkins_settings.delete k
 end
 
-puts jenkins_settings
+jenkins_url = JenkinsFactory.new.create(jenkins_settings)
 
-JenkinsFactory.new.create(jenkins_settings)
+puts jenkins_url
