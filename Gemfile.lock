@@ -7,7 +7,7 @@ GEM
       jmespath (~> 1.0)
     aws-sdk-resources (2.2.17)
       aws-sdk-core (= 2.2.17)
-    aws-sdk-utils (0.0.4)
+    aws-sdk-utils (0.0.10)
       aws-sdk (= 2.2.17)
       cfndsl (= 0.4.0)
     cfndsl (0.4.0)
