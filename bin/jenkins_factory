@@ -8,11 +8,16 @@ opts = Trollop::options do
 end
 
 jenkins_settings = YAML.load_file(opts[:jenkins_settings_yml_path])
+secret_properties = YAML.load_file("secret_#{opts[:jenkins_settings_yml_path]}")
+jenkins_settings.merge! secret_properties
 
 jenkins_settings.keys.each do |k|
   jenkins_settings[k.to_sym] = jenkins_settings[k]
   jenkins_settings.delete k
 end
+
+my_ip = `dig @resolver1.opendns.com myip.opendns.com +short`
+jenkins_settings[:controller_ip] = "#{my_ip.chomp}/32"
 
 jenkins_url = JenkinsFactory.new.create(jenkins_settings)
 
