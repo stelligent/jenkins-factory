@@ -56,7 +56,7 @@ class JenkinsFactory
   def converge_jenkins_stack(customisations:)
     converger = CfndslConverger.new
     outputs = converger.converge stack_name: "Jenkins-Factory-#{Time.now.to_i}",
-                                 path_to_stack: 'lib/cfndsl/jenkins_cfndsl.rb',
+                                 path_to_stack: File.join(File.dirname(File.expand_path(__FILE__)), 'cfndsl', 'jenkins_cfndsl.rb'),
                                  bindings: customisations
     outputs
   end

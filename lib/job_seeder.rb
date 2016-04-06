@@ -23,7 +23,7 @@ class JobSeeder
   # only exposed for testing, don't call me
   # ok yea ERB more elegant but i'm feeling lazy
   def patch_job_seed(jobs_location:)
-    seed_xml = IO.read(File.join('lib', 'xml', 'job-seed-config.xml.erb'))
+    seed_xml = IO.read path_to_seed
     seed_xml.gsub!(/<%= @job_definition_relative_path %>/, jobs_location['job_definition_relative_path'])
     seed_xml.gsub!(/<%= @job_repo_branch %>/, jobs_location['job_repo_branch'])
     seed_xml.gsub!(/<%= @job_repo %>/, jobs_location['job_repo'])
@@ -31,6 +31,10 @@ class JobSeeder
   end
 
   private
+
+  def path_to_seed
+    File.join(File.dirname(File.expand_path(__FILE__)), 'lib', 'xml', 'job-seed-config.xml.erb')
+  end
 
   def jenkins_api_client(jenkins_connection_info:)
     JenkinsApi::Client.new server_url: jenkins_connection_info['jenkins_url'],
