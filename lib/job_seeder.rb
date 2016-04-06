@@ -33,7 +33,7 @@ class JobSeeder
   private
 
   def path_to_seed
-    File.join(File.dirname(File.expand_path(__FILE__)), 'lib', 'xml', 'job-seed-config.xml.erb')
+    File.join(File.dirname(File.expand_path(__FILE__)), 'xml', 'job-seed-config.xml.erb')
   end
 
   def jenkins_api_client(jenkins_connection_info:)
