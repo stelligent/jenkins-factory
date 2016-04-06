@@ -2,22 +2,19 @@
 require 'trollop'
 require 'jenkins_factory'
 require 'yaml'
+require 'util'
 
 opts = Trollop::options do
-  opt :jenkins_settings_yml_path, 'Show the YAML here', type: :string, required: true
+  opt :jenkins_settings_yml_path, 'YAML path', type: :string, required: true
 end
 
-jenkins_settings = YAML.load_file(opts[:jenkins_settings_yml_path])
-secret_properties = YAML.load_file("secret_#{opts[:jenkins_settings_yml_path]}")
-jenkins_settings.merge! secret_properties
+Trollop::die :jenkins_settings_yml_path, 'Must end in .yml' unless opts[:jenkins_settings_yml_path].end_with?('.yml')
 
-jenkins_settings.keys.each do |k|
-  jenkins_settings[k.to_sym] = jenkins_settings[k]
-  jenkins_settings.delete k
-end
+jenkins_settings = merge_secrets(opts[:jenkins_settings_yml_path])
 
-my_ip = `dig @resolver1.opendns.com myip.opendns.com +short`
-jenkins_settings[:controller_ip] = "#{my_ip.chomp}/32"
+Util.transform_keys_to_symbols(jenkins_settings)
+
+jenkins_settings[:controller_ip] = Util.discover_my_public_ip_cidr
 
 jenkins_url = JenkinsFactory.new.create(jenkins_settings)
 
