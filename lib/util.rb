@@ -7,7 +7,7 @@ module Util
 
   def self.merge_secrets(yml_path)
     jenkins_settings = YAML.load_file(yml_path)
-    secret_properties = secrets_file_path(yml_path)
+    secret_properties = YAML.load_file(secrets_file_path(yml_path))
     jenkins_settings.merge! secret_properties
     jenkins_settings
   end
