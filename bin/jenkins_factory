@@ -6,6 +6,8 @@ require 'util'
 
 opts = Trollop::options do
   opt :jenkins_settings_yml_path, 'YAML path', type: :string, required: true
+  opt :url_output_path, '', type: :string, required: true, default: 'jenkins_url'
+
 end
 
 Trollop::die :jenkins_settings_yml_path, 'Must end in .yml' unless opts[:jenkins_settings_yml_path].end_with?('.yml')
@@ -18,4 +20,4 @@ jenkins_settings[:controller_ip] = Util.discover_my_public_ip_cidr
 
 jenkins_url = JenkinsFactory.new.create(jenkins_settings)
 
-puts jenkins_url
+IO.write opts[:url_output_path], jenkins_url
