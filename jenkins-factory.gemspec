@@ -10,9 +10,11 @@ Gem::Specification.new do |s|
   s.summary       = 'jenkins_factory'
   s.description   = 'Experimental single-click for cranking out a basic Jenkins instance in EC2'
   s.homepage      = 'https://github.com/stelligent/jenkins-factory'
-  s.files         = FileList[ 'lib/**/*.rb' ]
+  s.files         = FileList[ 'lib/**/*.rb', 'lib/**/*.erb' ]
 
   s.require_paths << 'lib'
+  s.require_paths << 'lib/cfndsl'
+  s.require_paths << 'lib/xml'
 
   s.required_ruby_version = '~> 2.2'
 
