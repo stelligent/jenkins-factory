@@ -6,7 +6,7 @@ require 'util'
 
 opts = Trollop::options do
   opt :jenkins_settings_yml_path, 'YAML path', type: :string, required: true
-  opt :url_output_path, '', type: :string, required: true, default: 'jenkins_url'
+  opt :url_output_path, '', type: :string, required: false, default: 'jenkins_url'
 
 end
 
