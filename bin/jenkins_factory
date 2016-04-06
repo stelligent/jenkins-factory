@@ -10,7 +10,7 @@ end
 
 Trollop::die :jenkins_settings_yml_path, 'Must end in .yml' unless opts[:jenkins_settings_yml_path].end_with?('.yml')
 
-jenkins_settings = merge_secrets(opts[:jenkins_settings_yml_path])
+jenkins_settings = Util.merge_secrets(opts[:jenkins_settings_yml_path])
 
 Util.transform_keys_to_symbols(jenkins_settings)
 
