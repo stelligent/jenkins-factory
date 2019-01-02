@@ -43,9 +43,15 @@ else
   log_rev_range="v0.0.${current_version}..${head}"
 fi
 
+set +e
 issues=$(git log ${log_rev_range} --oneline | awk '{print $2}' | grep "${issue_prefix}" | uniq)
+set -e
 
-git tag -a v${new_version} -m "${new_version}" -m "Issues with commits, not necessarily closed: ${issues}"
+if [ "x$issues" = "x" ]; then
+  git tag -a v${new_version} -m "${new_version}" -m "No issues given"
+else
+  git tag -a v${new_version} -m "${new_version}" -m "Issues with commits, not necessarily closed: ${issues}"
+fi
 
 git push --tags
 
